@@ -1,0 +1,19 @@
+.image {
+  border-radius: 50%;
+  width: 250px;
+}
+.singerStyle {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  align-self: flex-start;
+}
+
+.artistPage {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(auto-fit, min-max(240px, 1fr));
+  background-color: black;
+}

@@ -1,0 +1,49 @@
+.album {
+  background-color: black;
+  cursor: pointer;
+  margin: 20px;
+}
+
+.image {
+  width: 250px;
+  align-items: center;
+}
+.data {
+  display: flex;
+  flex-direction: column;
+}
+.titleStyle {
+  color: white;
+}
+.album:hover {
+  background-color: grey;
+}
+
+.singerStyle {
+  color: grey;
+}
+.selectSortedBy {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 16px;
+}
+.selectOption {
+  margin-left: 16px;
+  margin: 20px;
+  padding: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .image {
+    width: 96px;
+  }
+  .data {
+    margin-left: 16px;
+  }
+
+  .album {
+    display: flex;
+  }
+}
