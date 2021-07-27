@@ -1,0 +1,11 @@
+.playlistPage {
+  display: grid;
+  gap: 1em;
+  margin-right: 50px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.image {
+  width: 250px;
+  height: 250px;
+  align-items: center;
+}

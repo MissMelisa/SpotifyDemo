@@ -4,7 +4,7 @@ import "./style.css";
 
 function LogIn() {
   return (
-    <div className="container" type="primary">
+    <div className="container">
       <a className="loginButton" href={AUTH_URL}>
         Log In
       </a>

@@ -1,8 +1,6 @@
-.albumPage {
-  background-color: black;
-}
-.albumList {
+.recentlyPlayedContainer {
   display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  background-color: black;
 }

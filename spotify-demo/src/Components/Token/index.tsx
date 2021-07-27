@@ -1,17 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useHistory } from "react-router";
 
 const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
 const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 const SCOPES = [
+  "user-read-recently-played",
   "user-top-read",
   "user-read-currently-playing",
   "user-read-playback-state",
   "playlist-read-private",
   "playlist-read-collaborative",
   "user-library-read",
+  "user-read-private",
   "user-follow-read",
+  "user-read-email",
+  "playlist-modify-public",
+  "user-modify-playback-state",
+  "playlist-modify-private",
+  "user-modify-playback-state",
 ];
 
 const hash = window.location.hash
@@ -23,12 +30,21 @@ const hash = window.location.hash
       initial[parts[0]] = decodeURIComponent(parts[1]);
     }
     return initial;
-  }, {});
+  }, {} as Record<string, any>);
 
 window.location.hash = "";
-export const AuthContext = React.createContext({});
 
-export default function AuthProvider({ children }) {
+type AuthContextType = { token: string | null; signOut: () => void };
+
+const initialContext: AuthContextType = { token: "", signOut: () => {} };
+
+export const AuthContext = React.createContext(initialContext);
+
+export default function AuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [token, setToken] = useState(localStorage.getItem("access_token"));
 
   const history = useHistory();
@@ -42,8 +58,8 @@ export default function AuthProvider({ children }) {
 
   function signOut() {
     localStorage.removeItem("access_token");
-    history.pushState("/");
-    setToken();
+    history.push("/");
+    setToken(null);
   }
 
   return (

@@ -1,7 +1,6 @@
 .album {
   background-color: black;
   cursor: pointer;
-  margin: 20px;
 }
 
 .image {
@@ -26,7 +25,6 @@
   color: white;
   font-size: 20px;
   font-weight: bold;
-  margin-left: 16px;
 }
 .selectOption {
   margin-left: 16px;
@@ -37,7 +35,7 @@
 
 @media (min-width: 320px) and (max-width: 480px) {
   .image {
-    width: 96px;
+    width: 90px;
   }
   .data {
     margin-left: 16px;
