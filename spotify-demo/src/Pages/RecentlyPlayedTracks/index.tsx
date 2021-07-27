@@ -18,10 +18,9 @@ export default function RecentlyPlayedTracksPage() {
   } = useQuery<ItemType[], Error>("recentlyPlayed", () =>
     fetchRecentlyPlayedTrack(token)
   );
-  if (isLoading) return "Loading...";
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (error) return "An error has occurred: " + error.message;
-
+  if (error) return <span>An error has occurred: {error.message}</span>;
   function handleOnStart(uri: any) {
     fetchPut(
       `/me/player/play`,

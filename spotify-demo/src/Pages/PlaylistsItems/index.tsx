@@ -5,21 +5,24 @@ import { playlistsItems } from "../../API";
 import MusicItem from "../../Components/MusicItem";
 
 import { AuthContext } from "../../Components/Token";
+import { ItemType } from "../../Types";
+
+type Params = {
+  id: string;
+};
 
 export default function PlaylistsItems() {
-  const { id } = useParams();
+  const { id } = useParams<Params>();
   const { token } = useContext(AuthContext);
 
   const {
     isLoading,
     error,
     data = [],
-  } = useQuery("playlist", () => playlistsItems(token, id));
-  if (isLoading) return "Loading...";
+  } = useQuery<ItemType[], Error>("playlist", () => playlistsItems(token, id));
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (error) return "An error has occurred: " + error.message;
-
-  console.log(data);
+  if (error) return <span>An error has occurred: {error.message}</span>;
   return (
     <div>
       {data.map((item) => (
@@ -27,7 +30,7 @@ export default function PlaylistsItems() {
           key={item.id}
           id={item.id}
           image={item.image}
-          title={item.name}
+          title={item.title}
           singer={item.singer}
         />
       ))}

@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { Button } from "antd";
-import { AuthContext } from "./Components/Token";
+import { AuthContext } from "../../Components/Token";
 
 export default function LogOut() {
-  const { onSignOutClick } = useContext(AuthContext);
+  const { signOut } = useContext(AuthContext);
 
   return (
     <div className="containerLogOut">
-      <Button onClick={onSignOutClick}>Log out </Button>
+      <Button onClick={signOut}>Log out </Button>
     </div>
   );
 }

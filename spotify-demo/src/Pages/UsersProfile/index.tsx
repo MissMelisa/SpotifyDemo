@@ -14,10 +14,9 @@ export default function UsersProfile() {
     "userData",
     () => fetchUsersProfile(token)
   );
-  if (isLoading) return "Loading...";
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (error) return "An error has occurred: " + error.message;
-
+  if (error) return <span>An error has occurred: {error.message}</span>;
   return (
     <div>
       {data && (

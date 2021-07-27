@@ -61,11 +61,14 @@ export default function CurrentPlaybackPage() {
     "current",
     () => fetchCurrentPlayback(token)
   );
-  if (isLoading) return "Loading...";
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return <span>An error has occurred: {error.message}</span>;
 
-  function handleOnPlay(uri: string) {
+  function handleOnPlay(uri?: string) {
+    if (!uri) {
+      return;
+    }
     mutationPlay.mutate({ token, uri });
   }
   function handlePauseTrackOn() {
@@ -99,7 +102,7 @@ export default function CurrentPlaybackPage() {
         {isPlaying === false ? (
           //stop
           <CaretRightOutlined
-            onClick={() => handleOnPlay(data.uri)}
+            onClick={() => handleOnPlay(data?.uri)}
             style={{ color: "white" }}
           />
         ) : (

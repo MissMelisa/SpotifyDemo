@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { fetchPlaylists, playlistsItems } from "../../API";
 import MusicItem from "../../Components/MusicItem";
 import { AuthContext } from "../../Components/Token";
+import { ItemType } from "../../Types";
 
 import "./style.css";
 
@@ -15,12 +16,11 @@ export default function PlaylistsPage() {
     isLoading,
     error,
     data = [],
-  } = useQuery("playlist", () => fetchPlaylists(token));
-  if (isLoading) return "Loading...";
+  } = useQuery<ItemType[], Error>("playlist", () => fetchPlaylists(token));
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (error) return "An error has occurred: " + error.message;
-
-  function reDirect(id) {
+  if (error) return <span>An error has occurred: {error.message}</span>;
+  function reDirect(id: string) {
     playlistsItems(token, id);
     history.push(`/yourplaylists/${id}`);
   }

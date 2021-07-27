@@ -16,9 +16,9 @@ export default function AlbumsPage() {
     error,
     data = [],
   } = useQuery<ItemType[], Error>("albumsData", () => fetchAlbums(token));
-  if (isLoading) return "Loading...";
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) return <span>An error has occurred: {error.message}</span>;
 
   return (
     <div className="albumPage">

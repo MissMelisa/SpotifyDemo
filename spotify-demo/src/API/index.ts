@@ -1,11 +1,11 @@
 import { CurrentPlayBack } from "../Types";
 
-export default function fetchData(token: string, url: string | null) {
+export default function fetchData(url: string, token: string) {
   return fetch(`https://api.spotify.com/v1${url}`, {
     headers: { Authorization: `Bearer ${token}` },
   }).then((result) => result.json());
 }
-export function fetchPut(token: string, url: string | null, body: any) {
+export function fetchPut(url: string, body: any, token: string) {
   return fetch(`https://api.spotify.com/v1${url}`, {
     method: "PUT",
     headers: { Authorization: `Bearer ${token}` },
@@ -18,7 +18,7 @@ export function fetchPut(token: string, url: string | null, body: any) {
   });
 }
 
-export function fetchPost(token: string | null, url: string | null) {
+export function fetchPost(token: string, url: string) {
   return fetch(`https://api.spotify.com/v1${url}`, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
@@ -44,7 +44,7 @@ type ItemAlbums = {
 };
 type ItemSinger = { name: string };
 
-export function fetchAlbums(token: string | null) {
+export function fetchAlbums(token: string) {
   return fetchData(`/me/albums`, token).then((result) => {
     const disks = result.items.map((item: ItemAlbums) => ({
       image: item.album.images[0].url,
@@ -59,12 +59,12 @@ type ItemFetchData = {
   images: ItemImage[];
   name: string;
 };
-export function fetchArtists(token: string | null) {
+export function fetchArtists(token: string) {
   return fetchData(`/me/following?type=artist&market=from_token`, token).then(
     (result) => {
       const singers = result.artists.items.map((item: ItemFetchData) => ({
         id: item.id,
-        images: item.images && item.images[0].url,
+        image: item.images && item.images[0].url,
         singer: item.name,
       }));
       return singers;
@@ -74,9 +74,7 @@ export function fetchArtists(token: string | null) {
 
 type fetchCurrentArtist = { name: string };
 
-export function fetchCurrentPLayback(
-  token: string | null
-): Promise<CurrentPlayBack> {
+export function fetchCurrentPLayback(token: string): Promise<CurrentPlayBack> {
   return fetchData(`/me/player`, token).then((result) => {
     const song = {
       uri: result.context.uri,
@@ -99,7 +97,7 @@ type SpotifyPlaylist = {
   images: ItemImage[];
 };
 
-export function fetchPlaylists(token: string | null) {
+export function fetchPlaylists(token: string) {
   return fetchData(`/me/playlists`, token).then((result) => {
     const playlists = result.items.map((item: SpotifyPlaylist) => ({
       id: item.id,
@@ -122,7 +120,7 @@ type TrackType = {
   track: RecentlyPlayedTrackType;
   context: { uri: string };
 };
-export function fetchRecentlyPlayedTrack(token: string | null) {
+export function fetchRecentlyPlayedTrack(token: string) {
   return fetchData(`/me/player/recently-played?limit=8`, token).then(
     (result) => {
       const playlists = result.items.map((item: TrackType) => ({
@@ -174,9 +172,9 @@ export function playlistsItems(token: string, playlist_id: string) {
     (result) => {
       const track = result.items.map((item: TrackPlaylist) => ({
         id: item.track.id,
-        name: item.track.name,
+        title: item.track.name,
         uri: item.track.uri,
-        images: item.track.album && item.track.album.images[0].url,
+        image: item.track.album.images && item.track.album.images[0].url,
       }));
       return track;
     }
@@ -184,7 +182,7 @@ export function playlistsItems(token: string, playlist_id: string) {
 }
 type ParametersFetch = {
   token: string;
-  uri?: { context_uri: any };
+  uri?: string;
 };
 
 export function playTrack({ token, uri }: ParametersFetch) {

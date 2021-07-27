@@ -18,10 +18,9 @@ export default function TopArtistsandTracksPage() {
   } = useQuery<ItemType[], Error>("topArtist", () =>
     fetchTopArtistsandTracks(token)
   );
-  if (isLoading) return "Loading...";
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (error) return "An error has occurred: " + error.message;
-
+  if (error) return <span>An error has occurred: {error.message}</span>;
   return (
     <div className="containerTop">
       {data.map((item) => (

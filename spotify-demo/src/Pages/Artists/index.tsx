@@ -16,11 +16,10 @@ export default function ArtistsPage() {
     error,
     data = [],
   } = useQuery<ItemType[], Error>("artistData", () => fetchArtists(token));
+  console.log(data);
+  if (isLoading) return <span>"Loading..."</span>;
 
-  if (isLoading) return "Loading...";
-
-  if (error) return "An error has occurred: " + error.message;
-
+  if (error) return <span>An error has occurred: {error.message}</span>;
   return (
     <div className="artistPage">
       {data.map((item) => (

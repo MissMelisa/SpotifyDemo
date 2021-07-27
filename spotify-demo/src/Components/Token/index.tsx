@@ -34,7 +34,7 @@ const hash = window.location.hash
 
 window.location.hash = "";
 
-type AuthContextType = { token: string | null; signOut: () => void };
+type AuthContextType = { token: string; signOut: () => void };
 
 const initialContext: AuthContextType = { token: "", signOut: () => {} };
 
@@ -45,7 +45,9 @@ export default function AuthProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [token, setToken] = useState(localStorage.getItem("access_token"));
+  const [token, setToken] = useState(
+    localStorage.getItem("access_token") || ""
+  );
 
   const history = useHistory();
 
@@ -59,7 +61,7 @@ export default function AuthProvider({
   function signOut() {
     localStorage.removeItem("access_token");
     history.push("/");
-    setToken(null);
+    setToken("");
   }
 
   return (

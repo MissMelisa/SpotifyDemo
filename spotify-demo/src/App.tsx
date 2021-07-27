@@ -66,24 +66,16 @@ function App() {
           <Route path="/" exact>
             {!spotifyToken.token ? <LogIn /> : <HomePage />}
           </Route>
-          <Route path="/yourmusic" exact>
-            <AlbumsPage />
-          </Route>
-          <Route path="/yourartist" exact>
-            <ArtistsPage />
-          </Route>
-          <Route path="/yourplaylists" exact>
-            <PlaylistsPage />
-          </Route>
-          <Route path="/yourplaylists/:id" exact>
-            <PlaylistsItems />
-          </Route>
-          <Route path="/topArtists" exact>
-            <TopArtistsandTracksPage />
-          </Route>
-          <Route path="/player" exact>
-            <CurrentPlaybackPage />
-          </Route>
+          <Route path="/yourmusic" exact component={AlbumsPage} />
+          <Route path="/yourartist" exact component={ArtistsPage} />
+
+          <Route path="/yourplaylists" exact component={PlaylistsPage} />
+
+          <Route path="/yourplaylists/:id" exact component={PlaylistsItems} />
+
+          <Route path="/topArtists" exact component={TopArtistsandTracksPage} />
+
+          <Route path="/player" exact component={CurrentPlaybackPage} />
         </Switch>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
