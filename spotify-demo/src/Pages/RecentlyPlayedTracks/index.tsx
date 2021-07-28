@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
-import { fetchPut, fetchRecentlyPlayedTrack } from "../../API";
+import { deleteTrack, fetchRecentlyPlayedTrack } from "../../API";
 import MusicItem from "../../Components/MusicItem";
 import { AuthContext } from "../../Components/Token";
 import { ItemType } from "../../Types";
@@ -11,6 +11,12 @@ import "./style.css";
 export default function RecentlyPlayedTracksPage() {
   const { token } = useContext(AuthContext);
 
+  const queryClient = useQueryClient();
+  const mutationDelete = useMutation(deleteTrack, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("recentlyPlayed");
+    },
+  });
   const {
     isLoading,
     error,
@@ -21,20 +27,15 @@ export default function RecentlyPlayedTracksPage() {
   if (isLoading) return <span>"Loading..."</span>;
 
   if (error) return <span>An error has occurred: {error.message}</span>;
-  function handleOnStart(uri: any) {
-    fetchPut(
-      `/me/player/play`,
-      {
-        context_uri: uri,
-      },
-      token
-    );
+
+  function deteleItem(id) {
+    mutationDelete.mutate({ token, id });
   }
   return (
     <div className="recentlyPlayedContainer">
       {data.map((item) => (
         <MusicItem
-          onClick={() => handleOnStart(item.uri)}
+          deleteItem={() => deteleItem(item.id)}
           key={item.id}
           id={item.id}
           image={item.image}

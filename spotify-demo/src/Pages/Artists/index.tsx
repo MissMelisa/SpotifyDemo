@@ -28,7 +28,6 @@ export default function ArtistsPage() {
           id={item.id}
           title={item.singer}
           image={item.image}
-          singer={item.singer}
         />
       ))}
     </div>

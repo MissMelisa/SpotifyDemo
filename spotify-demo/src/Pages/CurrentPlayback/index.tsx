@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
+  deleteTrack,
   fetchCurrentPLayback as fetchCurrentPlayback,
   nextTrack,
   playTrack,
@@ -17,6 +18,8 @@ import {
   StepForwardFilled,
 } from "@ant-design/icons";
 import { CurrentPlayBack } from "../../Types";
+
+import "./style.css";
 
 export default function CurrentPlaybackPage() {
   const { token } = useContext(AuthContext);
@@ -56,6 +59,11 @@ export default function CurrentPlaybackPage() {
       queryClient.invalidateQueries("current");
     },
   });
+  const mutationDelete = useMutation(deleteTrack, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("current");
+    },
+  });
 
   const { isLoading, error, data } = useQuery<CurrentPlayBack, Error>(
     "current",
@@ -82,15 +90,20 @@ export default function CurrentPlaybackPage() {
     mutationPrevious.mutate({ token });
   }
 
+  function deteleItem(id) {
+    mutationDelete.mutate({ token, id });
+  }
+
   return (
-    <div>
+    <div className={"currentPlayContainer"}>
       {data && (
         <MusicItem
           onClick={() => handleOnPlay(data.uri)}
+          deleteItem={() => deteleItem(data.id)}
           key={data.id}
           title={data.name}
           id={data.id}
-          singer={data.name}
+          singer={data.singer}
           image={data.image}
         />
       )}
@@ -118,12 +131,6 @@ export default function CurrentPlaybackPage() {
             color: "white",
           }}
         />
-        <audio controls>
-          <source
-            src="https://p.scdn.co/mp3-preview/b8bbc5ca9cc5fc1a9ddb73fa47107f00c59c422c?cid=d8270bf43b854af89672bd03c2395a04"
-            type="audio/mpeg"
-          />
-        </audio>
       </div>
     </div>
   );

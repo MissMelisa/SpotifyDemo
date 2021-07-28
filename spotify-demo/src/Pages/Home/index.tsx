@@ -1,5 +1,4 @@
 import { Typography } from "antd";
-import CurrentPlaybackPage from "../CurrentPlayback";
 import RecentlyPlayedTracksPage from "../RecentlyPlayedTracks";
 import UsersProfile from "../UsersProfile";
 
@@ -15,7 +14,6 @@ export default function HomePage() {
       </div>
       <div>
         <Typography className="typography">You are listening...</Typography>
-        <CurrentPlaybackPage />
       </div>
     </div>
   );

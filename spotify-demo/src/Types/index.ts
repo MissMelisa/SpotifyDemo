@@ -4,6 +4,7 @@ export type ItemType = {
   title: string;
   singer: string;
   uri?: string;
+  date?: any;
 };
 
 export type CurrentPlayBack = {
@@ -11,7 +12,7 @@ export type CurrentPlayBack = {
   image: string;
   uri: string;
   name: string;
-  singer: string;
+  singer?: string;
 };
 
 export type ProfileType = {

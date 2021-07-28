@@ -19,6 +19,7 @@ const SCOPES = [
   "user-modify-playback-state",
   "playlist-modify-private",
   "user-modify-playback-state",
+  "user-library-modify",
 ];
 
 const hash = window.location.hash
