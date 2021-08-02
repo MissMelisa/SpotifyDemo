@@ -18,5 +18,5 @@ You will also see any lint errors in the console.
 
 The main aim of this project was to improve my skills as a web developer. Using and keep improving my code.
 
-##Technologies
+## Technologies
 This project was created with: *React, *Git, *Ant and *SpotifyAPI
